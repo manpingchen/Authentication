@@ -1,0 +1,27 @@
+.form {
+  width: 200px;
+  max-width: 25rem;
+  margin: 2rem auto;
+}
+
+.control {
+  margin-bottom: 0.5rem;
+}
+
+.control label {
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.control input {
+  display: block;
+  width: 100%;
+}
+
+.action {
+  margin-top: 1.5rem;
+}
+
+.action button {
+  width: 100%;
+}
