@@ -45,7 +45,6 @@
   background-color: transparent;
   color: #aaa;
   border: none;
-  padding: 0.15rem 1.5rem;
   font-size: 0.8rem;
   margin-bottom: 2rem;
 }
@@ -53,4 +52,15 @@
 .actions .toggle:hover {
   text-decoration: underline;
   background-color: transparent;
+}
+
+.error {
+  width: 200px;
+  margin: 0 auto;
+}
+
+.error p {
+  color: tomato;
+  font-size: 0.7rem;
+  margin-bottom: 1rem;
 }
