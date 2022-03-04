@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import useInput from "../../hooks/use-input";
+import AuthContext from "../../store/auth-context";
 
 import classes from "./AuthForm.module.css";
 
@@ -10,9 +11,11 @@ const emailValidateHandler = (emailAddress) => {
 };
 
 const AuthForm = () => {
-  const [isNewUser, setIsNewUser] = useState(true);
+  const [isNewUser, setIsNewUser] = useState(false);
   const [errors, setErrors] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const authCtx = useContext(AuthContext);
 
   const switchAuthModeHandler = () => {
     setIsNewUser((prevState) => !prevState);
@@ -45,7 +48,7 @@ const AuthForm = () => {
 
     let url;
 
-    if (isNewUser) {
+    if (!isNewUser) {
       url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.REACT_APP_FIREBASE_API_KEY}`;
     } else {
       url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.REACT_APP_FIREBASE_API_KEY}`;
@@ -61,19 +64,22 @@ const AuthForm = () => {
       headers: { "Content-Type": "application/json" },
     });
 
-    if (response) {
-      setIsSubmitting(false);
-    }
-
     const data = await response.json();
 
     if (data.error) {
       const errorMsgObjs = data.error.errors.map((error) => error.message);
       const errorMsgArr = Object.values(errorMsgObjs);
       setErrors(errorMsgArr);
-    } else {
+      setIsSubmitting(false);
+    }
+    if (!data.error && isNewUser) {
       emailResetHandler();
       passwordResetHandler();
+      console.log({ data, isNewUser });
+    }
+    if (!data.error && !isNewUser) {
+      console.log("LOG IN");
+      authCtx.login(data.idToken);
     }
   };
 
@@ -94,12 +100,12 @@ const AuthForm = () => {
   }
 
   if (!isSubmitting) {
-    buttonText = isNewUser ? "Login" : "Create Account";
+    buttonText = isNewUser ? "Create Account" : "Login";
   }
 
   return (
     <section className={classes.auth}>
-      <h1>{isNewUser ? "Login" : "Sign Up"}</h1>
+      <h1>{isNewUser ? "Sign Up" : "Login"}</h1>
       <form onSubmit={submitHandler}>
         <div className={classes.control}>
           <label htmlFor="email">Your Email</label>
