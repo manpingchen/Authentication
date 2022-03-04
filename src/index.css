@@ -45,6 +45,11 @@ button:hover {
   color: #fff;
 }
 
+button:disabled {
+  background-color: rgb(205, 205, 205);
+  cursor: not-allowed;
+}
+
 input {
   border: 1px solid mediumorchid;
   margin-bottom: 0.5rem;
