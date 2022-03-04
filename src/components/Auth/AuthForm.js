@@ -16,6 +16,7 @@ const AuthForm = () => {
 
   const switchAuthModeHandler = () => {
     setIsNewUser((prevState) => !prevState);
+    setErrors([]);
   };
 
   const {
@@ -39,37 +40,40 @@ const AuthForm = () => {
 
   const submitHandler = async (event) => {
     event.preventDefault();
+    setErrors([]);
     setIsSubmitting(true);
 
+    let url;
+
     if (isNewUser) {
+      url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.REACT_APP_FIREBASE_API_KEY}`;
     } else {
-      const response = await fetch(
-        `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.REACT_APP_FIREBASE_API_KEY}`,
-        {
-          method: "POST",
-          body: JSON.stringify({
-            email: emailValue,
-            password: passwordValue,
-            returnSecureToken: true,
-          }),
-          headers: { "Content-Type": "application/json" },
-        }
-      );
+      url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.REACT_APP_FIREBASE_API_KEY}`;
+    }
 
-      if (response) {
-        setIsSubmitting(false);
-      }
+    const response = await fetch(url, {
+      method: "POST",
+      body: JSON.stringify({
+        email: emailValue,
+        password: passwordValue,
+        returnSecureToken: true,
+      }),
+      headers: { "Content-Type": "application/json" },
+    });
 
-      const data = await response.json();
+    if (response) {
+      setIsSubmitting(false);
+    }
 
-      if (data.error) {
-        const errorMsgObjs = data.error.errors.map((error) => error.message);
-        const errorMsgArr = Object.values(errorMsgObjs);
-        setErrors(errorMsgArr);
-      } else {
-        emailResetHandler();
-        passwordResetHandler();
-      }
+    const data = await response.json();
+
+    if (data.error) {
+      const errorMsgObjs = data.error.errors.map((error) => error.message);
+      const errorMsgArr = Object.values(errorMsgObjs);
+      setErrors(errorMsgArr);
+    } else {
+      emailResetHandler();
+      passwordResetHandler();
     }
   };
 
