@@ -3,7 +3,7 @@
 ## Summary
 This is a React authentication web application integrating with Firebase Authentication (Email/Password) with custom hook that gives input an on-key validation. </br>
 
-![alt text](https://repository-images.githubusercontent.com/465765517/bf6a7783-ac9c-4b26-8a77-ad04da32a7eb)
+![alt text](https://repository-images.githubusercontent.com/465765517/7749f99b-e79e-4e85-bb26-e83e63f6af29)
 
 ## Firebase Authentication API Integration 
 https://firebase.google.com/docs/reference/rest/auth#section-create-email-password
