@@ -12,6 +12,7 @@ const emailValidateHandler = (emailAddress) => {
 const AuthForm = () => {
   const [isNewUser, setIsNewUser] = useState(true);
   const [errors, setErrors] = useState([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const switchAuthModeHandler = () => {
     setIsNewUser((prevState) => !prevState);
@@ -34,10 +35,11 @@ const AuthForm = () => {
     hasError: passwordError,
   } = useInput(true, passwordValidateHandler);
 
-  const shouldButtonDisabled = !isEmailValid || !isPasswordValid;
+  const shouldButtonDisabled = isSubmitting || !isEmailValid || !isPasswordValid;
 
   const submitHandler = async (event) => {
     event.preventDefault();
+    setIsSubmitting(true);
 
     if (isNewUser) {
     } else {
@@ -53,6 +55,11 @@ const AuthForm = () => {
           headers: { "Content-Type": "application/json" },
         }
       );
+
+      if (response) {
+        setIsSubmitting(false);
+      }
+
       const data = await response.json();
 
       if (data.error) {
@@ -75,6 +82,17 @@ const AuthForm = () => {
       ))}
     </div>
   );
+
+  let buttonText;
+
+  if (isSubmitting) {
+    buttonText = "loading...";
+  }
+
+  if (!isSubmitting) {
+    buttonText = isNewUser ? "Login" : "Create Account";
+  }
+
   return (
     <section className={classes.auth}>
       <h1>{isNewUser ? "Login" : "Sign Up"}</h1>
@@ -109,7 +127,7 @@ const AuthForm = () => {
         </div>
         {errorTexts}
         <div className={classes.actions}>
-          <button disabled={shouldButtonDisabled}>{isNewUser ? "Login" : "Create Account"}</button>
+          <button disabled={shouldButtonDisabled}>{buttonText}</button>
           <button type="button" className={classes.toggle} onClick={switchAuthModeHandler}>
             {isNewUser ? "Create new account" : "Login with existing account"}
           </button>

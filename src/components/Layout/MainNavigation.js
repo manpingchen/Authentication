@@ -16,9 +16,9 @@ const MainNavigation = () => {
           <li>
             <Link to='/profile'>Profile</Link>
           </li>
-          <li>
+          {/* <li>
             <button>Logout</button>
-          </li>
+          </li> */}
         </ul>
       </nav>
     </header>
