@@ -7,6 +7,10 @@ import { Fragment, useContext } from "react";
 const MainNavigation = () => {
   const { isLoggedIn, logout } = useContext(AuthContext);
 
+  const logOutHandler = () => {
+    logout();
+  };
+
   return (
     <header className={classes.header}>
       <Link to="/">
@@ -25,7 +29,7 @@ const MainNavigation = () => {
                 <Link to="/profile">Profile</Link>
               </li>
               <li>
-                <button onClick={logout}>Logout</button>
+                <button onClick={logOutHandler}>Logout</button>
               </li>
             </Fragment>
           )}
