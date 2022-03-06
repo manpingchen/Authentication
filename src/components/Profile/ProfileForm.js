@@ -3,8 +3,10 @@ import AuthContext from "../../store/auth-context";
 import { useContext, useState } from "react";
 import useInput from "../../hooks/use-input";
 import { passwordValidateHandler } from "../../helpers/inputValidations";
+import { useHistory } from "react-router-dom";
 
 const ProfileForm = () => {
+  const history = useHistory();
   const { token } = useContext(AuthContext);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -32,10 +34,15 @@ const ProfileForm = () => {
         }),
         headers: { "Content-Type": "application/json" },
       }
-    ).then((response) => {
-      console.log({ token, response });
-      setIsSubmitting(false);
-    });
+    )
+      .then((response) => {
+        history.replace("/");
+        setIsSubmitting(false);
+      })
+      .catch((error) => {
+        inputRestHandler();
+        console.log({ error });
+      });
   };
 
   const shouldButtonDisabled = isSubmitting || !isValueValid;

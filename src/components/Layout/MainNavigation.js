@@ -5,7 +5,7 @@ import AuthContext from "../../store/auth-context";
 import { Fragment, useContext } from "react";
 
 const MainNavigation = () => {
-  const { isLoddgedIn } = useContext(AuthContext);
+  const { isLoggedIn, logout } = useContext(AuthContext);
 
   return (
     <header className={classes.header}>
@@ -14,18 +14,18 @@ const MainNavigation = () => {
       </Link>
       <nav>
         <ul>
-          {!isLoddgedIn && (
+          {!isLoggedIn && (
             <li>
               <Link to="/auth">Login</Link>
             </li>
           )}
-          {isLoddgedIn && (
+          {isLoggedIn && (
             <Fragment>
               <li>
                 <Link to="/profile">Profile</Link>
               </li>
               <li>
-                <button>Logout</button>
+                <button onClick={logout}>Logout</button>
               </li>
             </Fragment>
           )}

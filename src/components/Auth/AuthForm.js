@@ -3,8 +3,10 @@ import useInput from "../../hooks/use-input";
 import AuthContext from "../../store/auth-context";
 import classes from "./AuthForm.module.css";
 import { passwordValidateHandler, emailValidateHandler } from "../../helpers/inputValidations";
+import { useHistory } from "react-router-dom";
 
 const AuthForm = () => {
+  const history = useHistory();
   const [isNewUser, setIsNewUser] = useState(false);
   const [errors, setErrors] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -72,7 +74,7 @@ const AuthForm = () => {
       console.log({ data, isNewUser });
     }
     if (!data.error && !isNewUser) {
-      console.log("LOG IN");
+      history.replace('/')
       authCtx.login(data.idToken);
     }
   };
@@ -124,9 +126,7 @@ const AuthForm = () => {
             onBlur={passwordBlurHandler}
           />
           {passwordError && (
-            <p className="error">
-              Please set minimum password length to at least a value of 6.
-            </p>
+            <p className="error">Please set minimum password length to at least a value of 6.</p>
           )}
         </div>
         {errorTexts}
