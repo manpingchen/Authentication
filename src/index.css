@@ -62,3 +62,10 @@ label {
   text-align: left;
   font-size: 0.8rem;
 }
+
+p.error {
+  margin: 0 auto 1rem;
+  color: tomato;
+  font-size: 0.7rem;
+  margin-bottom: 1rem;
+}

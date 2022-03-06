@@ -1,14 +1,8 @@
 import { useContext, useState } from "react";
 import useInput from "../../hooks/use-input";
 import AuthContext from "../../store/auth-context";
-
 import classes from "./AuthForm.module.css";
-
-const passwordValidateHandler = (enteredValue) => enteredValue.trim().length > 5;
-const emailValidateHandler = (emailAddress) => {
-  var mailformat = /^\w+([-]?\w+)*@\w+([-]?\w+)*(\.\w{2,3})+$/;
-  return mailformat.test(emailAddress);
-};
+import { passwordValidateHandler, emailValidateHandler } from "../../helpers/inputValidations";
 
 const AuthForm = () => {
   const [isNewUser, setIsNewUser] = useState(false);
@@ -86,7 +80,7 @@ const AuthForm = () => {
   const errorTexts = errors.length > 0 && (
     <div>
       {errors.map((error, index) => (
-        <p key={index} className={classes.error}>
+        <p key={index} className="error">
           {error}
         </p>
       ))}
@@ -117,7 +111,7 @@ const AuthForm = () => {
             onChange={emailChangeHandler}
             onBlur={emailBlurHandler}
           />
-          {emailError && <p className={classes.error}>Please enter valid email address</p>}
+          {emailError && <p className="error">Please enter valid email address</p>}
         </div>
         <div className={classes.control}>
           <label htmlFor="password">Your Password</label>
@@ -130,7 +124,7 @@ const AuthForm = () => {
             onBlur={passwordBlurHandler}
           />
           {passwordError && (
-            <p className={classes.error}>
+            <p className="error">
               Please set minimum password length to at least a value of 6.
             </p>
           )}

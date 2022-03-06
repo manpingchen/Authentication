@@ -25,3 +25,9 @@
 .action button {
   width: 100%;
 }
+
+.tip {
+  font-size: 0.7rem;
+  color: #aaa;
+  margin-bottom: 1rem;
+}
