@@ -74,8 +74,8 @@ const AuthForm = () => {
       console.log({ data, isNewUser });
     }
     if (!data.error && !isNewUser) {
-      history.replace('/')
       authCtx.login(data.idToken);
+      history.replace("/profile");
     }
   };
 
