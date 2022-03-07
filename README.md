@@ -21,3 +21,5 @@ Firebase Authentication API Integration
 https://firebase.google.com/docs/reference/rest/auth#section-create-email-password
 ### useInput
 Custom hook for input that gives an inline validation and an instant error feedback before submitting which improve the UX
+### Auto Logout
+Auto log user out based on the responded data from Firebase expiration time
